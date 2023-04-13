@@ -35,7 +35,7 @@ export default function Practice() {
                     }
                     <ul>
                         {currentQuestion.answers.map(answer => (
-                        <li key={answer.id}>{answer.option}</li>
+                            <li key={answer.id}>{answer.option}</li>
                         ))}
                     </ul>
                     <div class="accordion" id="accordionExample">
