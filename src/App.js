@@ -1,6 +1,7 @@
 import './App.css';
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Breadcrumb from './pages/Breadcrumb/Breadcrumb';
 
 const HomePage = lazy(() => import("./pages/Home/Home"));
 const CertPage = lazy(() => import("./pages/Cert/Cert"));
@@ -11,6 +12,7 @@ function App() {
   return (
     <Router>
       <React.Fragment>
+        <Breadcrumb/>
         <Suspense fallback={<div style={{textAlign: "center"}}>Loading...</div>}>
           <Routes>
             <Route exact path="/" element={<HomePage/>} />

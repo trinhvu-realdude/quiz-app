@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPracticeByCert } from "../../api/api";
+import AnswerOption from "../Answer/AnswerOption";
 
 export default function Practice() {
 
@@ -23,45 +24,73 @@ export default function Practice() {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
 
-    return (
-        <div>
-            {currentQuestion && (
-                <div>
-                    <h3>Question {currentQuestionIndex + 1}:</h3>
-                    {
-                        currentQuestion.question.split("\n").map((question) => (
-                            <p>{question}</p>
-                        ))
-                    }
-                    <ul>
-                        {currentQuestion.answers.map(answer => (
-                            <li key={answer.id}>{answer.option}</li>
-                        ))}
-                    </ul>
-                    <div class="accordion" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Explanation
-                                </button>
-                            </h2>
-                            </div>
+    const handleSelectQuestion = (question) => {
+        setCurrentQuestionIndex(listQuestionPractice.indexOf(question))
+    }
 
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                {
-                                    currentQuestion.explanations.split("\n").map((explanation) => (
-                                        <p>{explanation}</p>
-                                    ))    
-                                }
-                            </div>
-                            </div>
-                        </div>
+    return (
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-3">
+                    <div className="container-fluid">
+                        {
+                            listQuestionPractice && listQuestionPractice.length > 0
+                            ? listQuestionPractice.map((item) => (
+                                <button 
+                                    key={item.id}
+                                    type="button" 
+                                    className={`btn btn${currentQuestionIndex === item.id - 1 ? "-info" : "-outline-info"}`} 
+                                    style={{width: "52px"}}
+                                    onClick={() => handleSelectQuestion(item)}
+                                >
+                                    {item.id}
+                                </button>
+                            ))
+                            : null
+                        }
                     </div>
-                    <button onClick={handleNextQuestion}>Next</button>
                 </div>
-            )}
+            
+                {
+                    currentQuestion && (
+                        <div className="col-md-9">
+                            <h3>Question {currentQuestionIndex + 1}:</h3>
+                            {
+                                currentQuestion.question.split("\n").map((question) => (
+                                    <p>{question}</p>
+                                ))
+                            }
+                            <ul>
+                                {currentQuestion.answers.map(answer => (
+                                    <AnswerOption key={answer.id} answer={answer}/>
+                                ))}
+                            </ul>
+                            <div className="accordion" id="accordionExample">
+                                <div className="card">
+                                    <div className="card-header" id="headingOne">
+                                        <h2 className="mb-0">
+                                            <button className="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target={`#collapse${currentQuestion.id}`} aria-expanded="true" aria-controls={`collapse${currentQuestion.id}`}>
+                                                Explanation
+                                            </button>
+                                        </h2>
+                                    </div>
+
+                                    <div id={`collapse${currentQuestion.id}`} className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div className="card-body">
+                                            {
+                                                currentQuestion.explanations.split("\n").map((explanation) => (
+                                                    <p>{explanation}</p>
+                                                ))    
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onClick={handleNextQuestion}>Next</button>
+                        </div>
+                    )
+                }
+            </div>
         </div>
     );
 }
