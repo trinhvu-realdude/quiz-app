@@ -1,3 +1,5 @@
+import "./CertCard.css";
+
 export default function CertCard({cert}) {
     return (
         <div 
