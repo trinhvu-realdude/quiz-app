@@ -16,6 +16,11 @@ export const getCertsByExam = async (exam) => {
             exam
         })
     });
+
+    if (!response.ok) {
+        throw new Error("Error retrieving certificates");
+    }
+
     const result = await response.json();
     return result.data;
 }
@@ -31,6 +36,11 @@ export const getPracticeByCert = async (exam, certificate) => {
             certificate
         })
     });
+
+    if (!response.ok) {
+        throw new Error("Error retrieving practice questions");
+    }
+
     const result = await response.json();
     return result.data;
 }
