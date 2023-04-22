@@ -3,9 +3,8 @@ import "./CertCard.css";
 export default function CertCard({cert}) {
     return (
         <div 
-            className="cert-item" 
+            className="cert-item m-4" 
             style={{
-                margin: "20px",
                 height: "420px"
             }}
         >

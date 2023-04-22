@@ -1,13 +1,19 @@
 import { useState } from "react";
 
-export default function ButtonCarousel({ listQuestionPractice, handleSelectQuestion , currentQuestionIndex }) {
+export default function ButtonCarousel({ 
+    listQuestionPractice,
+    handleSelectQuestion, 
+    currentQuestionIndex,
+    setDisplayExplanations
+}) {
 
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const itemsPerSlide = 40;
+    const itemsPerSlide = window.innerWidth <= 820 ? 20 : 40;
     const slides = listQuestionPractice ? Math.ceil(listQuestionPractice.length / itemsPerSlide) : 0;
 
-    const handleSelect = (selectedIndex, e) => {
+    const handleSelect = (selectedIndex) => {
+        setDisplayExplanations(false);
         setActiveIndex(selectedIndex);
     };
 
@@ -24,8 +30,12 @@ export default function ButtonCarousel({ listQuestionPractice, handleSelectQuest
                             className={`btn btn${item.id - 1 === currentQuestionIndex
                                 ? " btn-info"
                                 : " btn-outline-info"
-                            }`}
-                            style={{ width: "52px" }}
+                            } rounded-circle mx-1 my-1`}
+                            style={{ 
+                                width: "50px",
+                                height: "50px",
+                                fontSize: "14px"
+                            }}
                             onClick={() => handleSelectQuestion(item)}
                         >
                             {item.id}
@@ -36,7 +46,7 @@ export default function ButtonCarousel({ listQuestionPractice, handleSelectQuest
     };
 
     return (
-        <div className="col-md-3">
+        <div className="col-md-3 mb-2">
             <div id="carousel-control" className="carousel slide" data-interval="false">
                 <div className="carousel-inner">
                 {[...Array(slides)].map((_, i) => {
@@ -63,6 +73,7 @@ export default function ButtonCarousel({ listQuestionPractice, handleSelectQuest
                                     activeIndex === 0 ? slides - 1 : activeIndex - 1
                                 )
                             }
+                            style={{fontSize: "18px"}}
                         >
                             &larr;
                         </button>
@@ -73,6 +84,7 @@ export default function ButtonCarousel({ listQuestionPractice, handleSelectQuest
                                     activeIndex === slides - 1 ? 0 : activeIndex + 1
                                 )
                             }
+                            style={{fontSize: "18px"}}
                         >
                             &rarr;
                         </button>

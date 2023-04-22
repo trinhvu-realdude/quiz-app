@@ -13,6 +13,8 @@ export default function Practice() {
 
     const [listQuestionPractice, setListQuestionPractice] = useState([]);
 
+    const [displayExplanations, setDisplayExplanations] = useState(false);
+
     const [errorMessage, setErrorMessage] = useState();
 
     useEffect(() => {
@@ -36,6 +38,8 @@ export default function Practice() {
         setCurrentQuestionIndex(listQuestionPractice.indexOf(question))
     }
 
+    console.log(exam);
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -43,6 +47,7 @@ export default function Practice() {
                     listQuestionPractice={listQuestionPractice}
                     handleSelectQuestion={handleSelectQuestion}
                     currentQuestionIndex={currentQuestionIndex}
+                    setDisplayExplanations={setDisplayExplanations}
                 />
                 {
                     currentQuestion && (
@@ -50,13 +55,19 @@ export default function Practice() {
                             currentQuestion={currentQuestion}
                             currentQuestionIndex={currentQuestionIndex}
                             handleNextQuestion={handleNextQuestion}
+                            listQuestion={listQuestionPractice}
+                            displayExplanations={displayExplanations}
+                            setDisplayExplanations={setDisplayExplanations}
                         />
                     )
                 }
             </div> 
             {
                 errorMessage && (
-                    <Error message={errorMessage} context={exam.substring(0, 1).toUpperCase() + exam.substring(1,).toLowerCase()}/>
+                    <Error 
+                        message={errorMessage} 
+                        context={exam}
+                    />
                 )
             }
             

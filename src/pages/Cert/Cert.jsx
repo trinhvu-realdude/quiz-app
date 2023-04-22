@@ -40,7 +40,7 @@ export default function Cert() {
             </div>
             {
                 errorMessage && (
-                    <Error message={errorMessage} context={"Home"} />
+                    <Error message={errorMessage} context={"home"} />
                 )
             }
         </div>
