@@ -59,3 +59,19 @@ export const getTestByExam = async (exam, certificate) => {
     const result = await response.json();
     return result.data;
 }
+
+export const checkAnswers = async (exam, certificate, questions) => {
+    const response = await fetch(BASE_URL + "/checkAnswers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            exam,
+            certificate,
+            questions
+        })
+    });
+    const result = await response.json();
+    return result.data;
+}

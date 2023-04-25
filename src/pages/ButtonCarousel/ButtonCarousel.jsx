@@ -4,7 +4,8 @@ export default function ButtonCarousel({
     listQuestionPractice,
     handleSelectQuestion, 
     currentQuestionIndex,
-    setDisplayExplanations
+    setCorrectSign,
+    setWrongSign
 }) {
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -13,7 +14,8 @@ export default function ButtonCarousel({
     const slides = listQuestionPractice ? Math.ceil(listQuestionPractice.length / itemsPerSlide) : 0;
 
     const handleSelect = (selectedIndex) => {
-        setDisplayExplanations(false);
+        setCorrectSign(false);
+        setWrongSign(false);
         setActiveIndex(selectedIndex);
     };
 
@@ -30,7 +32,7 @@ export default function ButtonCarousel({
                             className={`btn btn${item.id - 1 === currentQuestionIndex
                                 ? " btn-info"
                                 : " btn-outline-info"
-                            } rounded-circle mx-1 my-1`}
+                            } mx-1 my-1`}
                             style={{ 
                                 width: "50px",
                                 height: "50px",
