@@ -1,8 +1,6 @@
 export default function ExamCard({exam}) {
     return (
-        <div className="exam-item" style={{
-            margin: "20px"
-        }}>
+        <div className="exam-item m-4" >
             <div className="card text-center" style={{
                 width: "18rem"
             }}>
@@ -16,7 +14,7 @@ export default function ExamCard({exam}) {
                 />
                 <div className="card-body">
                     <h5 className="card-title">{exam.name}</h5>
-                    <div className="row">
+                    <div className="row mb-2">
                         <p className="col-sm-6 card-text">
                             <i style={{fontSize: "14px"}} className='fas'>&#xf559;</i> {exam.numberOfExams}
                         </p>

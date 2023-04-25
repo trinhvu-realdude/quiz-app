@@ -13,6 +13,12 @@ export default function Practice() {
 
     const [listQuestionPractice, setListQuestionPractice] = useState([]);
 
+    const [displayExplanations, setDisplayExplanations] = useState(false);
+
+    const [correctSign, setCorrectSign] = useState(false);
+
+    const [wrongSign, setWrongSign] = useState(false);
+
     const [errorMessage, setErrorMessage] = useState();
 
     useEffect(() => {
@@ -33,33 +39,51 @@ export default function Practice() {
     }
 
     const handleSelectQuestion = (question) => {
+        setDisplayExplanations(false);
         setCurrentQuestionIndex(listQuestionPractice.indexOf(question))
     }
 
     return (
         <div className="container-fluid">
-            <div className="row">
-                <ButtonCarousel
-                    listQuestionPractice={listQuestionPractice}
-                    handleSelectQuestion={handleSelectQuestion}
-                    currentQuestionIndex={currentQuestionIndex}
-                />
-                {
-                    currentQuestion && (
-                        <Question 
-                            currentQuestion={currentQuestion}
-                            currentQuestionIndex={currentQuestionIndex}
-                            handleNextQuestion={handleNextQuestion}
-                        />
-                    )
-                }
-            </div> 
             {
-                errorMessage && (
-                    <Error message={errorMessage} context={exam.substring(0, 1).toUpperCase() + exam.substring(1,).toLowerCase()}/>
+                errorMessage ? (
+                    <>
+                        <Error 
+                            message={errorMessage} 
+                            context={exam}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <div className="row">
+                            <ButtonCarousel
+                                listQuestionPractice={listQuestionPractice}
+                                handleSelectQuestion={handleSelectQuestion}
+                                currentQuestionIndex={currentQuestionIndex}
+                                setDisplayExplanations={setDisplayExplanations} 
+                                setCorrectSign={setCorrectSign}
+                                setWrongSign={setWrongSign}
+                            />
+                            {
+                                currentQuestion && (
+                                    <Question
+                                        currentQuestion={currentQuestion}
+                                        currentQuestionIndex={currentQuestionIndex}
+                                        handleNextQuestion={handleNextQuestion}
+                                        listQuestion={listQuestionPractice}
+                                        displayExplanations={displayExplanations}
+                                        setDisplayExplanations={setDisplayExplanations} 
+                                        correctSign={correctSign}
+                                        wrongSign={wrongSign}
+                                        setCorrectSign={setCorrectSign}
+                                        setWrongSign={setWrongSign}
+                                    />
+                                )
+                            }
+                        </div>
+                    </>
                 )
             }
-            
         </div>
     );
 }

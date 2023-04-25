@@ -2,16 +2,8 @@ import "./CertCard.css";
 
 export default function CertCard({cert}) {
     return (
-        <div 
-            className="cert-item" 
-            style={{
-                margin: "20px",
-                height: "420px"
-            }}
-        >
-            <div 
-                className="card text-center" 
-                style={{
+        <div className="cert-item m-4" style={{height: "420px"}}>
+            <div className="card text-center" style={{
                     width: "18rem",
                     height: "420px"
                 }}
@@ -39,11 +31,37 @@ export default function CertCard({cert}) {
                         </a>
                     </div>
                     <div className="col-sm-6">
-                        <a href={`/test${cert.url}`}>
-                            <button type="button" className="btn btn-outline-success" style={{width: "95px"}}>
-                                Test
+                        <button 
+                            type="button" 
+                            className="btn btn-outline-success" 
+                            data-toggle="modal" 
+                            data-target={`#modalTestCert${cert.id}`}
+                            style={{width: "95px"}}
+                        >
+                            Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id={`modalTestCert${cert.id}`} tabIndex="-1" aria-labelledby={`modalTestCertLabel${cert.id}`} aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id={`modalTestCertLabel${cert.id}`}>{cert.name}</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
                             </button>
-                        </a>
+                        </div>
+                        <div className="modal-body text-center">
+                            Are you ready to take {cert.name} test?
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <a href={`/test${cert.url}`}>
+                                <button type="button" className="btn btn-primary">Yes, I'm ready</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
