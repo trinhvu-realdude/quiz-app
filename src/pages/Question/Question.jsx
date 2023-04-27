@@ -47,7 +47,11 @@ export default function Question({
                                         <h3>
                                             Question {index + 1} of {listQuestion.length}:
                                         </h3>
-                                        <p>{item.question}</p>
+                                        {
+                                            item.question.split("\n").map((sentence, index) => (
+                                                <p>{sentence}</p>
+                                            ))
+                                        }
                                         <AnswerOption 
                                             answers={item.answers}
                                         />

@@ -26,6 +26,61 @@ export default function AnswerOption({
         }
         return clone;
     }
+
+    const handleSelectAnswerOption = (event, item) => {
+        event.preventDefault();
+        const input = document.querySelector(`input[id="${item.id}"]`);
+        const answerOptionDiv = document.getElementById(generateIdAnswer(item.id, alphabet));
+        if (input.checked === false) {
+            answerOptionDiv.className = "custom-control custom-radio mb-2 pt-2 pb-2 alert-info d-flex justify-content-between"; 
+        } else {
+            answerOptionDiv.className = "custom-control custom-radio mb-2 pt-2 pb-2"; 
+        }
+        input.checked = !input.checked;
+    }
+
+    const handleSubmit = () => {
+        const inputList = document.querySelectorAll("input");
+        inputList.forEach(item => {
+            const isCorrect = item.getAttribute("iscorrect");
+            let checked = item.checked;
+
+            if ((isCorrect === 'true' && checked) || isCorrect === 'true') {
+                const correctAnswer = document.getElementById(generateIdAnswer(item.id, alphabet));
+                correctAnswer.className = "custom-control custom-radio mb-2 pt-2 pb-2 alert-success d-flex justify-content-between";
+                setCorrectSign(true);
+            }
+
+            if (checked && isCorrect === 'false') {
+                const wrongAnswer = document.getElementById(generateIdAnswer(item.id, alphabet));
+                wrongAnswer.className = "custom-control custom-radio mb-2 pt-2 pb-2 alert-danger d-flex justify-content-between";
+                setWrongSign(true);
+            }
+
+            if (!checked && isCorrect === 'false') {
+                const uncheckedAnswer = document.getElementById(generateIdAnswer(item.id, alphabet));
+                uncheckedAnswer.style.opacity = "0.5";
+            }
+            document.getElementById(generateIdAnswer(item.id, alphabet)).classList.add("disabled");
+        });
+        setDisplayExplanations(true);
+    }
+
+    const handleReset = () => {
+        const inputList = document.querySelectorAll("input");
+        inputList.forEach(item => {
+            const answers = document.getElementById(generateIdAnswer(item.id, alphabet));
+            answers.className = "custom-control custom-radio mb-2 pt-2 pb-2";
+            answers.style.opacity = "1";
+            answers.classList.remove("disabled");
+            setCorrectSign(false);
+            setWrongSign(false);
+            if (item.checked) {
+                item.checked = false;
+            }
+        });
+        setDisplayExplanations(false);
+    }
       
     return (
         <form className="mb-4">
@@ -37,42 +92,30 @@ export default function AnswerOption({
                             id={generateIdAnswer(item.id, alphabet)}
                             className="custom-control custom-radio mb-2 pt-2 pb-2 d-flex justify-content-between" 
                             key={item.id} 
-                            onClick={(event) => {
-                                event.preventDefault();
-                                const input = document.querySelector(`input[id="${item.id}"]`);
-                                const answerOptionDiv = document.getElementById(generateIdAnswer(item.id, alphabet));
-                                if (input.checked === false) {
-                                    answerOptionDiv.className = "custom-control custom-radio mb-2 pt-2 pb-2 alert-info d-flex justify-content-between"; 
-                                } else {
-                                    answerOptionDiv.className = "custom-control custom-radio mb-2 pt-2 pb-2"; 
-                                }
-                                input.checked = !input.checked;
-                            }}
+                            onClick={(event) => handleSelectAnswerOption(event, item)}
                             style={{
                                 cursor: "pointer",
                                 borderRadius: "5px"
                             }}
                         >   
-                            <>
-                                <input 
-                                    type="radio" 
-                                    className="custom-control-input" 
-                                    id={item.id} 
-                                    name={item.option} 
-                                    value={item.option} 
-                                    iscorrect={item.isCorrect} 
-                                    checked={item.checked}
-                                />
-                                <label 
-                                    className="custom-control-label ml-2" 
-                                    htmlFor={item.id}
-                                    style={{cursor: "pointer"}}
-                                >
-                                    {
-                                        alphabet.charAt(index++).toUpperCase() + ". " + item.option
-                                    }
-                                </label>
-                            </>
+                            <input 
+                                type="radio" 
+                                className="custom-control-input" 
+                                id={item.id} 
+                                name={item.option} 
+                                value={item.option} 
+                                iscorrect={item.isCorrect} 
+                                checked={item.checked}
+                            />
+                            <label 
+                                className="custom-control-label ml-2" 
+                                htmlFor={item.id}
+                                style={{cursor: "pointer"}}
+                            >
+                                {
+                                    alphabet.charAt(index++).toUpperCase() + ". " + item.option
+                                }
+                            </label>
                             {
                                 correctSign && item.isCorrect === 'true' && (
                                     <button type="button" className="close mr-2" style={{fontSize: "16px"}}>
@@ -134,32 +177,7 @@ export default function AnswerOption({
                 <button
                     type="button"
                     className="btn btn-info mx-2"
-                    onClick={() => {
-                        const inputList = document.querySelectorAll("input");
-                        inputList.forEach(item => {
-                            const isCorrect = item.getAttribute("iscorrect");
-                            let checked = item.checked;
-
-                            if ((isCorrect === 'true' && checked) || isCorrect === 'true') {
-                                const correctAnswer = document.getElementById(generateIdAnswer(item.id, alphabet));
-                                correctAnswer.className = "custom-control custom-radio mb-2 pt-2 pb-2 alert-success d-flex justify-content-between";
-                                setCorrectSign(true);
-                            }
-
-                            if (checked && isCorrect === 'false') {
-                                const wrongAnswer = document.getElementById(generateIdAnswer(item.id, alphabet));
-                                wrongAnswer.className = "custom-control custom-radio mb-2 pt-2 pb-2 alert-danger d-flex justify-content-between";
-                                setWrongSign(true);
-                            }
-
-                            if (!checked && isCorrect === 'false') {
-                                const uncheckedAnswer = document.getElementById(generateIdAnswer(item.id, alphabet));
-                                uncheckedAnswer.style.opacity = "0.5";
-                            }
-                            document.getElementById(generateIdAnswer(item.id, alphabet)).classList.add("disabled");
-                        });
-                        setDisplayExplanations(true);
-                    }}
+                    onClick={() => handleSubmit()}
                 >
                     Submit
                 </button>
@@ -168,21 +186,7 @@ export default function AnswerOption({
                 <button
                     type="button"
                     className="btn btn-danger mx-2"
-                    onClick={() => {
-                        const inputList = document.querySelectorAll("input");
-                        inputList.forEach(item => {
-                            const answers = document.getElementById(generateIdAnswer(item.id, alphabet));
-                            answers.className = "custom-control custom-radio mb-2 pt-2 pb-2";
-                            answers.style.opacity = "1";
-                            answers.classList.remove("disabled");
-                            setCorrectSign(false);
-                            setWrongSign(false);
-                            if (item.checked) {
-                                item.checked = false;
-                            }
-                        });
-                        setDisplayExplanations(false);
-                    }}
+                    onClick={() => handleReset()}
                 >
                     Reset
                 </button>
