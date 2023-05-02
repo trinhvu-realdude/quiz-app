@@ -1,0 +1,18 @@
+.gototop {
+    cursor: pointer;
+    position: fixed;
+    bottom: 5%;
+    right: 30px;
+    background-color: #999;
+    width: 35px;
+    height: 35px;
+    border: 0;
+    color: #fff;
+    border-radius: 20%;
+    font-size: 24px;
+    z-index: 1;
+}
+
+.gototop:hover {
+    background-color: orange;
+}

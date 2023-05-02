@@ -1,5 +1,5 @@
 import './App.css';
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Breadcrumb from './pages/Breadcrumb/Breadcrumb';
 
@@ -9,6 +9,19 @@ const PracticePage = lazy(() => import("./pages/PracticePage/Practice"));
 const TestPage = lazy(() => import("./pages/TestPage/Test"));
 
 function App() {
+  const [buttonOnTop, setButtonOnTop] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+        setButtonOnTop(window.scrollY >= 200 ? !buttonOnTop : buttonOnTop)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  };
+
   return (
     <Router>
       <React.Fragment>
@@ -21,6 +34,15 @@ function App() {
             <Route path="/test/:exam/:certificate" element={<TestPage/>} />
           </Routes>
         </Suspense>
+        <button
+          className="gototop"
+          onClick={handleToTop}
+          style={{
+            visibility: buttonOnTop ? "visible" : "hidden"
+          }}
+        >
+          <i className="fa fa-angle-up"></i>
+        </button>
       </React.Fragment>
     </Router>
   );

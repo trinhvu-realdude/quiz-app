@@ -10,10 +10,14 @@ export default function Test() {
     const [listQuestionTest, setListQuestionTest] = useState([]);
 
     const submitTest = () => {
-        const questions = listQuestionTest.map(({id}) => ({id}));
-        checkAnswers(exam, certificate, questions).then((data) => {
-            console.log(data);
-        })
+        // const questions = listQuestionTest.map(({id}) => ({id}));
+        // checkAnswers(exam, certificate, questions).then((data) => {
+        //     console.log(data);
+        // });
+        const questionTest = document.querySelectorAll(".question-test");
+        questionTest.forEach(item => {
+            const inputList = item.lastChild.lastChild.childNodes;
+        });
     }
 
     useEffect(() => {

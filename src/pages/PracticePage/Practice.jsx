@@ -32,7 +32,9 @@ export default function Practice() {
         })
     }, [exam, certificate]);
 
-    const currentQuestion = listQuestionPractice && listQuestionPractice.length > 0 ? listQuestionPractice[currentQuestionIndex] : null;
+    const currentQuestion = listQuestionPractice && listQuestionPractice.length > 0 
+                            ? listQuestionPractice[currentQuestionIndex] 
+                            : null;
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);

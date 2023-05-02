@@ -12,6 +12,10 @@ export default function AnswerOption({
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
     let index = 0;
 
+    const isPracticePage = answers.some(e => {
+        return e.isCorrect !== undefined ? true : false;
+    })
+
     const generateIdAnswer = (originalId, alphabet) => {
         let clone = "";
         const fakeAlphabet = alphabet.substring(0, 16);
@@ -172,25 +176,29 @@ export default function AnswerOption({
                     </div>
                 )
             } 
-            <div className="d-flex justify-content-center mt-4">
-                {/* Submit button */}
-                <button
-                    type="button"
-                    className="btn btn-info mx-2"
-                    onClick={() => handleSubmit()}
-                >
-                    Submit
-                </button>
+            {
+                isPracticePage && (
+                    <div className="d-flex justify-content-center mt-4">
+                        {/* Submit button */}
+                        <button
+                            type="button"
+                            className="btn btn-info mx-2"
+                            onClick={() => handleSubmit()}
+                        >
+                            Submit
+                        </button>
 
-                {/* Reset button */}
-                <button
-                    type="button"
-                    className="btn btn-danger mx-2"
-                    onClick={() => handleReset()}
-                >
-                    Reset
-                </button>
-            </div>
+                        {/* Reset button */}
+                        <button
+                            type="button"
+                            className="btn btn-danger mx-2"
+                            onClick={() => handleReset()}
+                        >
+                            Reset
+                        </button>
+                    </div>        
+                )
+            }
         </form>
     );
 }
