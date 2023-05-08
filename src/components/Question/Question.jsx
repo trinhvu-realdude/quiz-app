@@ -4,13 +4,12 @@ export default function Question({
     currentQuestionIndex, 
     currentQuestion, 
     listQuestion,
-    listAnswerTest,
     displayExplanations,
     setDisplayExplanations,
     correctSign,
     wrongSign,
     setCorrectSign,
-    setWrongSign,
+    setWrongSign
 }) {
     return (
         <div className="col-md-9 mt-2">
@@ -44,7 +43,7 @@ export default function Question({
                         {
                             listQuestion && listQuestion.length > 0 && (
                                 listQuestion.map((item, index) => (
-                                    <div key={index} className="question-test">
+                                    <div key={index} className="question-test" id={index + 1}>
                                         <h3>
                                             Question {index + 1} of {listQuestion.length}:
                                         </h3>
@@ -56,6 +55,7 @@ export default function Question({
                                         <AnswerOption 
                                             answers={item.answers}
                                             currentQuestionIndex={index + 1}
+                                            isResultPage={true}
                                         />
                                     </div>
                                 ))

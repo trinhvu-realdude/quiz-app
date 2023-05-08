@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllExams} from "../../api/api";
 import "./Home.css";
-import ExamCard from "../ExamCard/ExamCard";
+import ExamCard from "../../components/ExamCard/ExamCard";
 
 export default function Home() {
 

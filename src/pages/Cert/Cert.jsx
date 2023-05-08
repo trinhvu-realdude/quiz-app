@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCertsByExam } from "../../api/api";
-import CertCard from "../CertCard/CertCard";
-import Error from "../Error/Error";
+import CertCard from "../../components/CertCard/CertCard";
+import Error from "../../components/Error/Error";
 
 export default function Cert() {
     const {exam} = useParams();
