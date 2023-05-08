@@ -9,7 +9,7 @@ export default function Question({
     correctSign,
     wrongSign,
     setCorrectSign,
-    setWrongSign,
+    setWrongSign
 }) {
     return (
         <div className="col-md-9 mt-2">
@@ -43,13 +43,19 @@ export default function Question({
                         {
                             listQuestion && listQuestion.length > 0 && (
                                 listQuestion.map((item, index) => (
-                                    <div key={index}>
+                                    <div key={index} className="question-test" id={index + 1}>
                                         <h3>
                                             Question {index + 1} of {listQuestion.length}:
                                         </h3>
-                                        <p>{item.question}</p>
+                                        {
+                                            item.question.split("\n").map((sentence, i) => (
+                                                <p key={i}>{sentence}</p>
+                                            ))
+                                        }
                                         <AnswerOption 
                                             answers={item.answers}
+                                            currentQuestionIndex={index + 1}
+                                            isResultPage={true}
                                         />
                                     </div>
                                 ))

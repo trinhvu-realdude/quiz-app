@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPracticeByCert } from "../../api/api";
-import ButtonCarousel from "../ButtonCarousel/ButtonCarousel";
-import Question from "../Question/Question";
-import Error from "../Error/Error";
+import ButtonCarousel from "../../components/ButtonCarousel/ButtonCarousel";
+import Question from "../../components/Question/Question";
+import Error from "../../components/Error/Error";
 
 export default function Practice() {
 
@@ -32,7 +32,9 @@ export default function Practice() {
         })
     }, [exam, certificate]);
 
-    const currentQuestion = listQuestionPractice && listQuestionPractice.length > 0 ? listQuestionPractice[currentQuestionIndex] : null;
+    const currentQuestion = listQuestionPractice && listQuestionPractice.length > 0 
+                            ? listQuestionPractice[currentQuestionIndex] 
+                            : null;
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);

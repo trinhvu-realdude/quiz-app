@@ -28,11 +28,13 @@ function Breadcrumb() {
                 </li>
                 {pathnames.map((pathname, index) => (
                     <li className="breadcrumb-item" key={pathname.path}>
-                    {index === pathnames.length - 1 ? (
-                        <span>{pathname.name}</span>
-                    ) : (
-                        <Link to={pathname.path}>{pathname.name}</Link>
-                    )}
+                    {
+                        index === pathnames.length - 1 ? (
+                            <span>{pathname.name}</span>
+                        ) : (
+                            <Link to={pathname.path}>{pathname.name}</Link>
+                        )
+                    }
                     </li>
                 ))}
             </ol>

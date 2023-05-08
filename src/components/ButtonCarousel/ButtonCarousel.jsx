@@ -19,7 +19,6 @@ export default function ButtonCarousel({
         setActiveIndex(selectedIndex);
     };
 
-
     const renderSlide = (startIdx) => {
         return (
             <div key={startIdx} className="container-fluid">
@@ -69,26 +68,26 @@ export default function ButtonCarousel({
                 listQuestionPractice && listQuestionPractice.length > 0 && (
                     <div className="d-flex justify-content-center mt-3">
                         <button
-                            className="btn btn-light mr-3"
+                            className={`btn btn-light mr-3 ${activeIndex === 0 ? "" : "text-primary"}`}
                             onClick={() =>
                                 handleSelect(
                                     activeIndex === 0 ? slides - 1 : activeIndex - 1
                                 )
                             }
-                            style={{fontSize: "18px"}}
+                            disabled={activeIndex === 0 ? true : false}
                         >
-                            &larr;
+                            &lt; Prev
                         </button>
                         <button
-                            className="btn btn-light"
+                            className={`btn btn-light ${activeIndex === slides - 1 ? "" : "text-primary"}`}
                             onClick={() =>
                                 handleSelect(
                                     activeIndex === slides - 1 ? 0 : activeIndex + 1
                                 )
                             }
-                            style={{fontSize: "18px"}}
+                            disabled={activeIndex === slides - 1 ? true : false}
                         >
-                            &rarr;
+                            Next &gt;
                         </button>
                     </div>
                 )
