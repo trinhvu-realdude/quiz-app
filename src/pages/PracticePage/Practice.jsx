@@ -6,8 +6,7 @@ import Question from "../../components/Question/Question";
 import Error from "../../components/Error/Error";
 
 export default function Practice() {
-
-    const {exam, certificate} = useParams();
+    const { exam, certificate } = useParams();
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -23,69 +22,65 @@ export default function Practice() {
 
     useEffect(() => {
         getPracticeByCert(exam, certificate)
-        .then(data => {
-            setListQuestionPractice(data)
-        })
-        .catch(error => {
-            console.error("Error retrieving practice questions:", error);
-            setErrorMessage("Sorry, no data found! We will update as soon as possible.")
-        })
+            .then((data) => {
+                setListQuestionPractice(data);
+            })
+            .catch((error) => {
+                console.error("Error retrieving practice questions:", error);
+                setErrorMessage(
+                    "Sorry, no data found! We will update as soon as possible."
+                );
+            });
     }, [exam, certificate]);
 
-    const currentQuestion = listQuestionPractice && listQuestionPractice.length > 0 
-                            ? listQuestionPractice[currentQuestionIndex] 
-                            : null;
+    const currentQuestion =
+        listQuestionPractice && listQuestionPractice.length > 0
+            ? listQuestionPractice[currentQuestionIndex]
+            : null;
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
+    };
 
     const handleSelectQuestion = (question) => {
         setDisplayExplanations(false);
-        setCurrentQuestionIndex(listQuestionPractice.indexOf(question))
-    }
+        setCurrentQuestionIndex(listQuestionPractice.indexOf(question));
+    };
 
     return (
         <div className="container-fluid">
-            {
-                errorMessage ? (
-                    <>
-                        <Error 
-                            message={errorMessage} 
-                            context={exam}
+            {errorMessage ? (
+                <>
+                    <Error message={errorMessage} context={exam} />
+                </>
+            ) : (
+                <>
+                    <div className="row">
+                        <ButtonCarousel
+                            listQuestionPractice={listQuestionPractice}
+                            handleSelectQuestion={handleSelectQuestion}
+                            currentQuestionIndex={currentQuestionIndex}
+                            setDisplayExplanations={setDisplayExplanations}
+                            setCorrectSign={setCorrectSign}
+                            setWrongSign={setWrongSign}
                         />
-                    </>
-                ) : (
-                    <>
-                        <div className="row">
-                            <ButtonCarousel
-                                listQuestionPractice={listQuestionPractice}
-                                handleSelectQuestion={handleSelectQuestion}
+                        {currentQuestion && (
+                            <Question
+                                currentQuestion={currentQuestion}
                                 currentQuestionIndex={currentQuestionIndex}
-                                setDisplayExplanations={setDisplayExplanations} 
+                                handleNextQuestion={handleNextQuestion}
+                                listQuestion={listQuestionPractice}
+                                displayExplanations={displayExplanations}
+                                setDisplayExplanations={setDisplayExplanations}
+                                correctSign={correctSign}
+                                wrongSign={wrongSign}
                                 setCorrectSign={setCorrectSign}
                                 setWrongSign={setWrongSign}
                             />
-                            {
-                                currentQuestion && (
-                                    <Question
-                                        currentQuestion={currentQuestion}
-                                        currentQuestionIndex={currentQuestionIndex}
-                                        handleNextQuestion={handleNextQuestion}
-                                        listQuestion={listQuestionPractice}
-                                        displayExplanations={displayExplanations}
-                                        setDisplayExplanations={setDisplayExplanations} 
-                                        correctSign={correctSign}
-                                        wrongSign={wrongSign}
-                                        setCorrectSign={setCorrectSign}
-                                        setWrongSign={setWrongSign}
-                                    />
-                                )
-                            }
-                        </div>
-                    </>
-                )
-            }
+                        )}
+                    </div>
+                </>
+            )}
         </div>
     );
 }

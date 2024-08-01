@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/api/v1";
+const BASE_URL = "http://localhost:5050/api/v1";
 
 export const getAllExams = async () => {
     const response = await fetch(BASE_URL + "/getAllExams");
